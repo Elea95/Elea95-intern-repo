@@ -24,7 +24,7 @@
 ---
 
 ## 📖 First-Person Account Reflection
-**Article Read:** _(Insert title & link to blog/video)_
+**Article Read:** (https://thriveworks.com/blog/living-adhd-man-gives-first-hand-account/) Living with ADHD: Man Gives First-Hand Account
 
 **Key Takeaway:**  
 Users with ADHD often struggle with overwhelming task lists. A better approach is **breaking tasks into smaller steps** with positive reinforcement.
