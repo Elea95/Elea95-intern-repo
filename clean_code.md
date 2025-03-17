@@ -70,7 +70,7 @@ def calculate_product_or_sum(num1: int, num2: int, values: list):
     return num1 + num2
 ```
 
-### Key Improvements:
+## Key Improvements:
 
 - Descriptive function name (calculate_product_or_sum)
 - Clear docstring explaining functionality
@@ -78,7 +78,7 @@ def calculate_product_or_sum(num1: int, num2: int, values: list):
 - Simplified logic using and
 - More readable loop (for value in values)
 
-### Conclusion
+## Conclusion
 
 Following Clean Code principles improves:
 
@@ -86,3 +86,18 @@ Following Clean Code principles improves:
 - ✅ Collaboration in teams
 - ✅ Debugging and future maintenance
 - ✅ Performance and efficiency
+
+# **Code Formatting & Style Guides**
+
+## **Why is Code Formatting Important?**
+
+- Improves **readability** and collaboration.
+- Ensures **consistency** in large projects.
+- Makes debugging and reviewing code **easier**.
+- Prevents potential **syntax errors**.
+
+## **Airbnb JavaScript Style Guide**
+
+- Enforces best practices for writing JavaScript.
+- Encourages readable and maintainable code.
+- Includes rules on indentation, spacing, variable naming, and function structure.
