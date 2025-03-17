@@ -63,3 +63,26 @@
 
 - `git cherry-pick` is really powerful for **applying specific changes** without merging a whole branch.
 - `git blame` is useful for **understanding why code was changed** before modifying it.
+
+# Git Bisect: Debugging Faster
+
+## What Does `git bisect` Do?
+
+- `git bisect` is a binary search tool to identify which commit introduced a bug.
+- It automates the process of checking each commit, speeding up debugging.
+
+## When Would You Use It?
+
+- When a bug appears, but we don't know **which commit introduced it**.
+- If a large team is working on a project and **many commits** were made before the bug was noticed.
+
+## How Does It Compare to Manual Debugging?
+
+- **Manual Debugging**: Requires checking each commit one by one, which is slow.
+- **Git Bisect**: Uses a **binary search approach**, reducing the number of checks dramatically.
+
+## Key Learnings:
+
+- `git bisect` is powerful for debugging long-running projects.
+- Marking commits as **"good" or "bad"** helps track down the exact cause.
+- Using `git bisect reset` ensures the repository is returned to normal.
