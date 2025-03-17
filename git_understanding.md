@@ -86,3 +86,23 @@
 - `git bisect` is powerful for debugging long-running projects.
 - Marking commits as **"good" or "bad"** helps track down the exact cause.
 - Using `git bisect reset` ensures the repository is returned to normal.
+
+# Writing Meaningful Commit Messages
+
+## What Makes a Good Commit Message?
+
+- A good commit message is **clear, concise, and structured**.
+- It follows a **consistent format** (e.g., `type(scope): short summary`).
+- It **explains why** a change was made, not just what changed.
+
+## How Does a Clear Commit Message Help in Team Collaboration?
+
+- Helps developers **quickly understand** changes without reading the code.
+- Makes debugging and **reverting commits easier**.
+- Provides **historical context** for decisions in long-term projects.
+
+## How Can Poor Commit Messages Cause Issues Later?
+
+- **Vague messages** ("updated files") make it impossible to know what was changed.
+- **Overly detailed messages** waste time and clutter commit history.
+- **Unstructured messages** reduce readability and make team collaboration harder.
