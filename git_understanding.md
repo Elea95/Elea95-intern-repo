@@ -106,3 +106,24 @@
 - **Vague messages** ("updated files") make it impossible to know what was changed.
 - **Overly detailed messages** waste time and clutter commit history.
 - **Unstructured messages** reduce readability and make team collaboration harder.
+
+# Creating & Reviewing Pull Requests
+
+## Why Are PRs Important in a Team Workflow?
+
+- Ensures **code quality** before merging.
+- Encourages **collaboration and discussion**.
+- Allows **tracking of changes** and their reasoning.
+
+## What Makes a Well-Structured PR?
+
+- **Clear Title** – Explains the change (e.g., `fix(auth): improve login security`).
+- **Detailed Description** – Lists changes and reasons.
+- **Linked Issues** – References related issues (e.g., `Fixes #42`).
+- **Concise Commits** – Small, logical commits improve readability.
+
+## What Did I Learn from Reviewing an Open-Source PR?
+
+- **Constructive feedback** is crucial in reviews.
+- Well-structured PRs **speed up approval**.
+- Reviewing helps **catch potential bugs early**.
