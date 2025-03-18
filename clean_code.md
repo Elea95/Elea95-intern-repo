@@ -101,3 +101,60 @@ Following Clean Code principles improves:
 - Enforces best practices for writing JavaScript.
 - Encourages readable and maintainable code.
 - Includes rules on indentation, spacing, variable naming, and function structure.
+
+# **Clean Code: Naming Variables & Functions**
+
+## **Best Practices for Naming Variables & Functions**  
+1. **Use Descriptive Names** – A name should explain what the variable or function does.  
+2. **Be Concise but Clear** – Avoid overly long names, but don’t sacrifice clarity.  
+3. **Use Consistent Naming Conventions** – Follow camelCase (JavaScript) or snake_case (Python) based on project style.  
+4. **Avoid Generic Names** – Names like `temp`, `data`, or `x` don’t provide context.  
+5. **Use Verbs for Functions** – Functions should describe an action (e.g., `fetchUserData()`, `calculateTotal()`).  
+6. **Boolean Variables Should Sound Like True/False** – Example: `isValid`, `hasPermission`, `isLoggedIn`.  
+7. **Avoid Abbreviations** – `usr` is unclear, while `user` is readable.  
+8. **Don’t Include Data Type in Names** – Instead of `userArray`, just use `users`.  
+
+---
+
+## **Example of Poorly Named Code**
+```js
+function d(u, p) {
+  if (p > 18) {
+    console.log("Allowed");
+  } else {
+    console.log("Denied");
+  }
+}
+```
+## **Issues:**
+ - d() doesn’t describe what the function does.
+ - u and p are unclear—what do they represent?
+
+## **Refactored Code with Better Naming**
+```js
+function checkUserAccess(username, age) {
+  if (age > 18) {
+    console.log("Access Granted");
+  } else {
+    console.log("Access Denied");
+  }
+}
+```
+## **Improvements:**
+ ✅ - checkUserAccess() clearly states its purpose.
+ ✅ - username and age explain what the parameters represent.
+ ✅ - Readability is improved, making it easier for other developers to understand.
+## **Reflections**
+What Makes a Good Variable or Function Name?
+ - It clearly communicates intent.
+ - It follows consistent naming conventions.
+ - It makes the code self-explanatory.
+What Issues Can Arise from Poorly Named Variables?
+ - Other developers (or your future self) may struggle to understand the code.
+ - Debugging becomes harder because the intent of variables is unclear.
+ - It increases cognitive load, making the code harder to maintain.
+How Did Refactoring Improve Code Readability?
+ - Now, the function describes exactly what it does.
+ - Variable names tell us what data they hold, reducing confusion.
+ - The logic is easier to follow and maintain.
+
