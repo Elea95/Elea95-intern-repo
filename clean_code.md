@@ -158,3 +158,95 @@ How Did Refactoring Improve Code Readability?
  - Variable names tell us what data they hold, reducing confusion.
  - The logic is easier to follow and maintain.
 
+# **Clean Code: Writing Small, Focused Functions**
+
+## **Best Practices for Writing Small Functions**  
+1. **Single Responsibility** – Each function should do only one thing.  
+2. **Keep Functions Short** – Ideally, under 20 lines of code.  
+3. **Descriptive Function Names** – A function’s name should describe exactly what it does.  
+4. **Avoid Deep Nesting** – Use early returns instead of multiple `if` statements.  
+5. **Break Large Functions into Smaller Ones** – If a function does too much, split it.  
+6. **Use Parameters Wisely** – Avoid passing too many arguments; prefer objects when needed.  
+7. **Follow DRY (Don’t Repeat Yourself)** – Extract repeated logic into reusable functions.  
+
+---
+
+## **Example of a Long, Complex Function**
+```js
+function processOrder(order) {
+  console.log("Processing order...");
+  if (!order) {
+    console.log("Invalid order");
+    return;
+  }
+  
+  let total = 0;
+  for (let item of order.items) {
+    total += item.price * item.quantity;
+  }
+  
+  if (order.discount) {
+    total -= total * (order.discount / 100);
+  }
+  
+  console.log("Final total: $" + total);
+  
+  if (order.email) {
+    console.log("Sending receipt to " + order.email);
+  } else {
+    console.log("No email provided.");
+  }
+}
+```
+## **Issues with this Code:**
+ - Does too many things – Calculates total, applies discount, logs info, and handles emails.
+ - Hard to test – No clear separation of concerns.
+ - Not reusable – If we need to reuse discount logic elsewhere, we’d have to duplicate it.
+
+## **Refactored Code with Smaller, Focused Functions**
+```js
+function calculateTotal(items) {
+  return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+}
+
+function applyDiscount(total, discount) {
+  return discount ? total - total * (discount / 100) : total;
+}
+
+function sendReceipt(email, total) {
+  if (email) {
+    console.log(`Sending receipt to ${email} for $${total}`);
+  } else {
+    console.log("No email provided.");
+  }
+}
+
+function processOrder(order) {
+  if (!order) {
+    console.log("Invalid order");
+    return;
+  }
+
+  console.log("Processing order...");
+  let total = calculateTotal(order.items);
+  total = applyDiscount(total, order.discount);
+  console.log(`Final total: $${total}`);
+  sendReceipt(order.email, total);
+}
+```
+## **Improvements:**
+✅ - Functions have clear responsibilities – One for total, one for discount, one for receipt.
+✅ - Easier to test – Each function can be tested independently.
+✅ - More readable and maintainable – Breaking it up makes it easier to understand.
+✅ - Reusable – calculateTotal() and applyDiscount() can be used elsewhere.
+
+## **Reflections**
+Why is Breaking Down Functions Beneficial?
+ - Improves readability by making code more understandable.
+ - Increases maintainability—changes are easier to make without breaking unrelated logic.
+ - Helps with reusability—small functions can be used in multiple places.
+ - Makes testing easier—each function can be tested separately.
+How Did Refactoring Improve the Structure of the Code?
+ - Now, each function does only one thing.
+ - The main processOrder() function is much cleaner and easier to follow.
+ - The logic is now modular, making it reusable in different parts of the application.
