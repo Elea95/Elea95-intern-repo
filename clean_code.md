@@ -480,3 +480,93 @@ function totalPrice(items) {
  - When the code can be refactored to be more self-explanatory.
 
  - When the comment is used as a crutch for poor naming or messy logic.
+
+## **Handling Errors & Edge Cases**
+
+### **Why Is Error Handling Important?**
+✅ **Prevents crashes** – Proper error handling ensures the application doesn’t break unexpectedly.  
+✅ **Improves user experience** – Users get meaningful feedback instead of cryptic error messages.  
+✅ **Enhances maintainability** – Developers can quickly debug and fix issues.  
+✅ **Protects against security vulnerabilities** – Helps prevent exploits due to unchecked inputs.  
+
+---
+
+## **Strategies for Handling Errors & Edge Cases**
+1. **Use Guard Clauses** – Return early to avoid deeply nested logic.  
+2. **Validate Inputs** – Ensure inputs meet expected criteria before processing.  
+3. **Try-Catch Blocks** – Handle exceptions gracefully without crashing.  
+4. **Default Fallbacks** – Provide default values when data is missing or incorrect.  
+5. **Logging & Monitoring** – Capture errors for debugging and system monitoring.  
+
+---
+
+## **Example of Poor Error Handling**
+### **Problematic Function**
+The following function doesn’t handle invalid inputs properly:  
+
+```js
+function calculateDiscount(price, discount) {
+  return price - (price * discount);
+}
+
+console.log(calculateDiscount(100, 0.2)); // ✅ Works
+console.log(calculateDiscount(null, 0.2)); // ❌ NaN
+console.log(calculateDiscount(100, "twenty")); // ❌ NaN
+console.log(calculateDiscount()); // ❌ NaN
+```
+## Issues with This Code
+ - ❌ No input validation – It assumes inputs are always correct.
+ - ❌ Doesn’t handle missing or incorrect values – Causes NaN errors.
+ - ❌ No safeguard against negative discounts or invalid price values.
+
+## Improved Error Handling
+**Refactored Code with Guard Clauses**
+```js
+/**
+ * Calculates the discounted price of an item.
+ *
+ * @param {number} price - The original price of the item.
+ * @param {number} discount - The discount percentage (e.g., 0.2 for 20%).
+ * @returns {number} The final price after discount.
+ * @throws {Error} If inputs are invalid.
+ */
+function calculateDiscount(price, discount) {
+  if (typeof price !== "number" || typeof discount !== "number") {
+    throw new Error("Invalid input: price and discount must be numbers.");
+  }
+  if (price < 0 || discount < 0 || discount > 1) {
+    throw new Error("Invalid values: price must be positive, discount must be between 0 and 1.");
+  }
+
+  return price - price * discount;
+}
+
+// ✅ Properly handles errors
+try {
+  console.log(calculateDiscount(100, 0.2)); // 80
+  console.log(calculateDiscount("100", 0.2)); // ❌ Throws an error
+} catch (error) {
+  console.error(error.message);
+}
+```
+## Improvements
+ - ✅ Added input validation – Ensures correct data types.
+ - ✅ Guard clauses – Checks for invalid values upfront, preventing unnecessary execution.
+ - ✅ Throws meaningful errors – Makes debugging easier.
+
+## Reflections
+**What was the issue with the original code?**
+
+ - It didn’t validate inputs, leading to unexpected errors (NaN).
+
+ - It didn’t prevent negative prices or discounts over 100%.
+
+ - Missing values caused the function to break instead of failing gracefully.
+
+**How does handling errors improve reliability?**
+
+ - Prevents incorrect operations from propagating.
+
+ - Provides clear feedback instead of silent failures.
+
+ - Ensures the application doesn’t crash due to bad inputs.
