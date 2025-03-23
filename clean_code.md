@@ -411,3 +411,72 @@ function calculateFinalPrice(items, discount = 0, taxRate = 0) {
  - It avoids redundant calculations and unnecessary variables.
 
  - It follows a clean, functional approach that improves maintainability.
+
+ ## **Best Practices for Writing Comments and Documentation**
+
+### **When to Use Comments?**
+✅ **Explaining why** – When the reasoning behind a piece of code isn’t obvious.  
+✅ **Clarifying complex logic** – When simplifying the code isn’t possible.  
+✅ **Describing API behavior** – When documenting function parameters and return values.  
+✅ **Adding TODOs and FIXMEs** – When indicating temporary workarounds or pending improvements.  
+
+### **When to Avoid Comments?**
+❌ **Obvious code** – If the code is self-explanatory, comments add clutter.  
+❌ **Redundant comments** – Avoid repeating what the code already says.  
+❌ **Instead of refactoring** – If a comment is required, consider rewriting the code for clarity.  
+❌ **Outdated comments** – Wrong or outdated comments cause confusion rather than help.  
+
+---
+
+## **Example of Poorly Commented Code**
+This function has unnecessary and unhelpful comments:  
+
+```js
+// This function calculates the total price of items
+function totalPrice(items) {
+  let sum = 0; // Initialize sum to zero
+  for (let i = 0; i < items.length; i++) {
+    sum += items[i].price * items[i].quantity; // Add the price * quantity to sum
+  }
+  return sum; // Return the final sum
+}
+```
+## Problems with This Code:
+ - ❌ Unnecessary comments – The code is self-explanatory.
+ - ❌ Redundant explanations – The comments repeat what the code does instead of providing useful context.
+ - ❌ No function documentation – There’s no description of parameters or return value.
+
+## Improved Comments and Documentation
+Here’s the same function with meaningful documentation:
+```js
+/**
+ * Calculates the total price of all items in a cart.
+ * 
+ * @param {Array} items - List of objects containing price and quantity.
+ * @returns {number} The total price of all items.
+ */
+function totalPrice(items) {
+  return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+}
+```
+## Improvements
+ - ✅ Removed unnecessary comments – The function is self-explanatory.
+ - ✅ Added meaningful documentation – Describes the function’s behavior, parameters, and return value.
+ - ✅ Simplified logic – Used reduce() for a cleaner approach.
+
+## Reflections
+**When should you add comments?**
+
+ - When explaining why a decision was made, not just what the code does.
+
+ - When providing documentation for APIs or functions used by others.
+
+ - When describing complex algorithms that aren’t immediately clear.
+
+**When should you avoid comments and instead improve the code?**
+
+ - When the comment states the obvious (e.g., // Loop through array).
+
+ - When the code can be refactored to be more self-explanatory.
+
+ - When the comment is used as a crutch for poor naming or messy logic.
