@@ -570,3 +570,83 @@ try {
  - Provides clear feedback instead of silent failures.
 
  - Ensures the application doesn’t crash due to bad inputs.
+
+## **Writing Unit Tests for Clean Code**
+
+### **Why Are Unit Tests Important?**
+✅ **Catch bugs early** – Detect issues before they reach production.  
+✅ **Ensure correctness** – Verify functions behave as expected.  
+✅ **Improve maintainability** – Helps prevent accidental breaking changes.  
+✅ **Encourage better design** – Code that is easier to test is often cleaner.  
+✅ **Support refactoring** – Provides confidence when modifying code.  
+
+---
+
+## Example Function Without Tests
+Here’s a simple function that calculates the total price after tax:
+```js
+function calculateTotal(price, taxRate) {
+  return price + price * taxRate;
+}
+```
+This function seems straightforward, but does it handle edge cases?
+ - What if price is negative?
+
+ - What if taxRate is not a number?
+
+ - What if no values are provided?
+
+## Adding Unit Tests
+**Jest Test Cases**
+```js
+const { calculateTotal } = require("./calculateTotal");
+
+test("calculates total correctly with valid inputs", () => {
+  expect(calculateTotal(100, 0.2)).toBe(120);
+});
+
+test("handles zero tax correctly", () => {
+  expect(calculateTotal(100, 0)).toBe(100);
+});
+
+test("throws an error for negative prices", () => {
+  expect(() => calculateTotal(-100, 0.2)).toThrow("Invalid price");
+});
+
+test("throws an error for invalid tax rates", () => {
+  expect(() => calculateTotal(100, "tax")).toThrow("Invalid tax rate");
+});
+```
+## Issues Found While Testing
+🔴 Edge cases not handled – Negative prices should be prevented.
+🔴 Invalid inputs not checked – The function assumed inputs were always correct.
+
+**Refactored Function with Improved Validations**
+```js
+function calculateTotal(price, taxRate) {
+  if (typeof price !== "number" || price < 0) {
+    throw new Error("Invalid price");
+  }
+  if (typeof taxRate !== "number" || taxRate < 0 || taxRate > 1) {
+    throw new Error("Invalid tax rate");
+  }
+  
+  return price + price * taxRate;
+}
+```
+✅ Now the function handles errors properly
+
+## Reflections
+**How do unit tests help keep code clean?**
+
+ - Forces developers to think about edge cases.
+
+ - Encourages writing functions with clear inputs/outputs.
+
+ - Makes future refactoring safer and more confident.
+
+**What issues did testing reveal?**
+
+ - The original function lacked error handling.
+
+ - Tests forced improvements in code quality.
