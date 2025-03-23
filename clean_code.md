@@ -250,3 +250,88 @@ How Did Refactoring Improve the Structure of the Code?
  - Now, each function does only one thing.
  - The main processOrder() function is much cleaner and easier to follow.
  - The logic is now modular, making it reusable in different parts of the application.
+
+
+
+
+## **Avoiding Code Duplication (DRY Principle)**
+
+### **Understanding the DRY Principle**
+**DRY (Don’t Repeat Yourself)** is a fundamental clean code principle that encourages reducing code duplication by using abstraction techniques such as functions, loops, and reusable components.
+
+### **Why Avoid Code Duplication?**
+- **Reduces maintenance effort** – Fixing bugs in one place is easier than fixing the same bug in multiple places.
+- **Improves readability** – Code becomes more structured and understandable.
+- **Enhances reusability** – Logic can be reused across different parts of the codebase.
+- **Reduces the chance of errors** – Less duplication means fewer chances for inconsistencies.
+
+---
+
+## **Issues with Duplicated Code**
+Before refactoring, the following code has repeated logic for calculating the total price in multiple places:
+
+```js
+function calculateOrderTotal(order) {
+  let total = 0;
+  for (let item of order.items) {
+    total += item.price * item.quantity;
+  }
+  return total;
+}
+
+function processOrder(order) {
+  console.log("Processing order...");
+  let total = 0;
+  for (let item of order.items) {
+    total += item.price * item.quantity;
+  }
+  if (order.discount) {
+    total -= total * (order.discount / 100);
+  }
+  console.log("Final total: $" + total);
+}
+```
+### Problems with This Code
+ - ❌ Repeated logic for calculating the total price in both calculateOrderTotal and processOrder.
+ - ❌ Difficult maintenance – If we need to change how total is calculated, we must update multiple places.
+ - ❌ Harder to debug – Bugs related to total calculations may occur in multiple places, making debugging complex.
+
+### Refactored Code with Smaller, Focused Functions
+Instead of repeating the total calculation logic, we move it into a separate function:
+```js
+function calculateTotal(items, discount = 0) {
+  let total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  return discount ? total - total * (discount / 100) : total;
+}
+
+function processOrder(order) {
+  if (!order) {
+    console.log("Invalid order");
+    return;
+  }
+
+  console.log("Processing order...");
+  let total = calculateTotal(order.items, order.discount);
+  console.log(`Final total: $${total}`);
+}
+```
+## Improvements
+✅ Code is cleaner – The total calculation logic is handled by a single function (calculateTotal).
+✅ Easier to update – Any change in calculation logic only needs to be made in one place.
+✅ Increases reusability – calculateTotal can be used in multiple places without duplicating logic.
+✅ Improves readability – The main processOrder function is now more focused and easier to understand.
+
+## **Reflections**
+**What were the issues with duplicated code?**
+
+ - The same logic appeared in multiple functions, increasing maintenance effort.
+
+ - If a bug occurred, fixing it required changing multiple parts of the code.
+
+**How did refactoring improve maintainability?**
+
+ - The logic is now centralized, meaning updates only need to be made once.
+
+ - The code is more readable, easier to debug, and more reusable.
+
+ - The application is now easier to scale with minimal modifications.
