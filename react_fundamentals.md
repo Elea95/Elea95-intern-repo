@@ -53,3 +53,13 @@ Using `useState`, React ensures:
 3. The UI remains in sync with the state.
 
 By always using `setState`, we prevent UI bugs and ensure React optimally updates the DOM.
+
+# Working with Lists & User Input
+## Reflection
+What are some common issues when working with lists in React?
+
+ - Key Prop Missing: When rendering lists, it's essential to provide a unique key prop to each element. This helps React identify which items have changed, been added, or removed, improving performance and reducing bugs.
+
+ - State Mutability: Modifying the state directly (e.g., using list.push(item)) is not recommended. You should always return a new array by using spread syntax or methods like .concat() to ensure React recognizes the change and re-renders the component.
+
+ - Re-rendering performance: If the list is large, frequent updates (such as adding or removing items) could impact performance. You can optimize it by using techniques like memoization or lazy loading.

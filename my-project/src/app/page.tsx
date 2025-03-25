@@ -10,6 +10,11 @@ export default function Home() {
           Go to Counter Page
         </button>
       </Link>
+      <Link href="/form">
+        <button className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 transition">
+          Go to Form Page
+        </button>
+      </Link>
     </div>
   );
 }
