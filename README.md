@@ -5,6 +5,7 @@ Internship with FB
 # React.js + Tailwind CSS Setup
 
 This project demonstrates how to set up a React app with Tailwind CSS.
+## 🛠 Installation Steps From https://tailwindcss.com/docs/installation/framework-guides/nextjs
 
 ## 📌 Steps to Install:
 
