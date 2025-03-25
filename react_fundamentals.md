@@ -38,3 +38,18 @@ Setting up React with Tailwind CSS required overcoming several installation and 
 
 4. **Easier Debugging**  
    - Breaking UI into small components makes debugging simpler compared to a large monolithic file.
+   
+   # Handling State & User Input
+
+## What happens if we modify state directly instead of using setState?
+
+In React, **state should always be updated using the `setState` function** (e.g., `setCount(value)`). 
+
+If we modify the state directly (`count = count + 1`), **React will not detect the change** and **the component will not re-render**, meaning the UI won't update. 
+
+Using `useState`, React ensures:
+1. The component re-renders when the state changes.
+2. The new state value is correctly scheduled and applied.
+3. The UI remains in sync with the state.
+
+By always using `setState`, we prevent UI bugs and ensure React optimally updates the DOM.
