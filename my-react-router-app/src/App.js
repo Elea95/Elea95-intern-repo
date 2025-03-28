@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import UseEffectExamplePage from "./pages/use-effect-example";
 import UseMemoExamplePage from "./pages/use-memo-example";
+import UseCallbackExamplePage from "./pages/use-callback-example";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <li><Link to="/profile" className="text-blue-500 hover:underline">Profile</Link></li>
             <li><Link to="/use-effect-example" className="text-blue-500 hover:underline">useEffect Example</Link></li>
             <li><Link to="/use-memo-example" className="text-blue-500 hover:underline">useMemo Example</Link></li>
+            <li><Link to="/use-callback-example" className="text-blue-500 hover:underline">useCallback Example</Link></li>
           </ul>
         </nav>
         
@@ -24,6 +26,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/use-effect-example" element={<UseEffectExamplePage />} />
           <Route path="/use-memo-example" element={<UseMemoExamplePage />} />
+          <Route path="/use-callback-example" element={<UseCallbackExamplePage />} />
         </Routes>
       </div>
     </Router>

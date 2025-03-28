@@ -141,3 +141,23 @@ This approach avoids conflicts and makes the navigation task much easier.
  - The expensive calculations will run on every render, slowing down the app.
 
  - The filter function will be called even when filter hasn’t changed, causing lag.
+
+ # Preventing Unnecessary Renders with useCallback
+## Reflection
+ 📝 **Questions & Answers**
+
+1) What problem does useCallback solve?
+
+It prevents unnecessary re-creation of functions, avoiding extra child re-renders in React components.
+
+2) How does useCallback work differently from useMemo?
+
+useCallback memoizes functions, while useMemo memoizes values (return values of functions).
+
+useCallback returns a function, while useMemo returns a computed value.
+
+3) When would useCallback not be useful?
+
+If a function is not passed as a prop to a child component, there is no benefit in memoizing it.
+
+If a function is cheap to create, using useCallback adds unnecessary complexity.
