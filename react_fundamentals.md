@@ -103,3 +103,22 @@ Instead of forcing React Router into Next.js (which already has its own routing 
 ✅ Ensured routing works correctly in a standard CSR (Client-Side Rendering) environment.
 
 This approach avoids conflicts and makes the navigation task much easier.
+
+# Understanding React Hooks: useEffect
+## Reflection
+ 📝 **Questions & Answers**
+1) When should you use useEffect instead of handling logic inside event handlers?
+
+ - useEffect is for side effects that should run automatically (e.g., fetching data on mount, subscriptions).
+
+ - Event handlers are for user-triggered actions (e.g., clicking a button).
+
+2) What happens if you don’t provide a dependency array?
+
+ - useEffect runs after every render, which can cause infinite loops if it updates state.
+
+3) How can improper use of useEffect cause performance issues?
+
+ - Unnecessary re-renders: If dependencies aren’t optimized, it can keep running.
+
+ - Memory leaks: Not cleaning up (e.g., event listeners, intervals) can waste resources.
