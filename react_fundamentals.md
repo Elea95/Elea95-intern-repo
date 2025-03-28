@@ -63,3 +63,43 @@ What are some common issues when working with lists in React?
  - State Mutability: Modifying the state directly (e.g., using list.push(item)) is not recommended. You should always return a new array by using spread syntax or methods like .concat() to ensure React recognizes the change and re-renders the component.
 
  - Re-rendering performance: If the list is large, frequent updates (such as adding or removing items) could impact performance. You can optimize it by using techniques like memoization or lazy loading.
+
+ # Navigation with React Router
+ ## Reflection
+ **Question: What are the advantages of client-side routing?**
+Answer:
+
+ - Faster navigation: No need to reload the entire page when switching between views.
+
+ - Better user experience: Page transitions are smoother.
+
+ - Efficient data fetching: React can reuse already loaded components and fetch only new data.
+
+ - State preservation: Unlike full page reloads, client-side routing maintains the application state.
+
+ ## Problems We Faced with React Router in Next.js
+ 
+ 1) Server-Side Rendering Conflicts 🖥️
+
+ - Next.js primarily uses server-side rendering (SSR), while React Router is designed for client-side rendering (CSR).
+
+ - This caused errors like "react-dom/client only works in a Client Component", since Next.js treats files in app/ as server components by default.
+
+2) Missing document.getElementById("root") 🚨
+
+ - In a traditional React app, the app mounts to a <div id="root">, but Next.js doesn’t have index.html in the same way, leading to mounting issues.
+
+3) Routing Differences 🔄
+
+ - Next.js has file-based routing (e.g., app/page.tsx → /), while React Router requires explicitly defining routes inside App.js.
+
+ - Mixing both caused confusion and 404 errors when trying to navigate.
+
+ ## Creating ne project
+
+Instead of forcing React Router into Next.js (which already has its own routing system), we:
+✅ Created a pure React project to fully control client-side routing.
+✅ Installed React Router without interference from Next.js.
+✅ Ensured routing works correctly in a standard CSR (Client-Side Rendering) environment.
+
+This approach avoids conflicts and makes the navigation task much easier.
