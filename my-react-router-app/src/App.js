@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import UseEffectExamplePage from "./pages/use-effect-example";
+import UseMemoExamplePage from "./pages/use-memo-example";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <li><Link to="/" className="text-blue-500 hover:underline">Home</Link></li>
             <li><Link to="/profile" className="text-blue-500 hover:underline">Profile</Link></li>
             <li><Link to="/use-effect-example" className="text-blue-500 hover:underline">useEffect Example</Link></li>
+            <li><Link to="/use-memo-example" className="text-blue-500 hover:underline">useMemo Example</Link></li>
           </ul>
         </nav>
         
@@ -21,6 +23,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/use-effect-example" element={<UseEffectExamplePage />} />
+          <Route path="/use-memo-example" element={<UseMemoExamplePage />} />
         </Routes>
       </div>
     </Router>

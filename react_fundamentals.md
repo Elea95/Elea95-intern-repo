@@ -122,3 +122,22 @@ This approach avoids conflicts and makes the navigation task much easier.
  - Unnecessary re-renders: If dependencies aren’t optimized, it can keep running.
 
  - Memory leaks: Not cleaning up (e.g., event listeners, intervals) can waste resources.
+
+# Optimizing Performance with useMemo
+## Reflection
+ 📝 **Questions & Answers**
+1) How does useMemo improve performance?
+
+ - It caches expensive calculations and only recomputes when necessary, reducing unnecessary function calls.
+
+2) When should you avoid using useMemo?
+
+ - If the computation is not expensive, useMemo adds complexity with minimal gain.
+
+ - Overusing it can hurt readability and make debugging harder.
+
+3) What happens if you remove useMemo from your implementation?
+
+ - The expensive calculations will run on every render, slowing down the app.
+
+ - The filter function will be called even when filter hasn’t changed, causing lag.
