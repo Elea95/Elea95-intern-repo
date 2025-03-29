@@ -8,6 +8,7 @@ import UseMemoExamplePage from "./pages/use-memo-example";
 import UseCallbackExamplePage from "./pages/use-callback-example";
 import TestApi from "./components/TestApi";
 import Counter from "./components/Counter";
+import StatusMessage from "./components/StatusMessage";
 
 function App() {
   return (
@@ -32,7 +33,12 @@ function App() {
           <Route path="/use-memo-example" element={<UseMemoExamplePage />} />
           <Route path="/use-callback-example" element={<UseCallbackExamplePage />} />
           <Route path="/test-api" element={<TestApi />} />
-          <Route path="/counter" element={<Counter />} />
+          <Route path="/counter" element={
+            <div className="flex flex-col items-center space-y-4">
+              <Counter />
+              <StatusMessage />
+            </div>
+          } />
         </Routes>
       </div>
     </Router>
