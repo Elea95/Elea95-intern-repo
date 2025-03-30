@@ -1,18 +1,35 @@
 import 'react-native-gesture-handler'; 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native'; // For navigation container
 import { createStackNavigator } from '@react-navigation/stack';  // For stack navigator
-import { Text, View, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import Animated, { Easing, withTiming, useSharedValue, withSpring, useAnimatedStyle } from 'react-native-reanimated'; // Updated import from react-native-reanimated
 import { PanGestureHandler, LongPressGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler'; // Import gesture handlers
+import axiosInstance from './src/api'; // Import the Axios instance
 
 // Home Screen Component
 function HomeScreen({ navigation }) {
-  // Use shared value from react-native-reanimated for swipe and opacity animation
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  
+  // For pan gesture and fade-in animation
   const translateX = useSharedValue(0); // For pan gesture
   const opacity = useSharedValue(0);   // For fade-in effect
 
+  const fetchData = async () => {
+    try {
+      // Make a GET request to fetch data
+      const response = await axiosInstance.get('/data'); // Replace with your actual endpoint
+      setData(response.data); // Set the data to state
+    } catch (err) {
+      setError('Failed to fetch data. Please try again later.');
+      console.error('API Error:', err); // Log the error for debugging
+    }
+  };
+
   useEffect(() => {
+    fetchData(); // Fetch data when the component mounts
+
     // Trigger fade-in animation after the component mounts
     opacity.value = withTiming(1, { duration: 2000, easing: Easing.ease });
   }, []);
@@ -40,20 +57,11 @@ function HomeScreen({ navigation }) {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.container}>
         {/* Pan Gesture Handler */}
         <PanGestureHandler onGestureEvent={onGestureEvent}>
           <Animated.View
-            style={[
-              {
-                width: 200,
-                height: 200,
-                backgroundColor: 'lightblue',
-                justifyContent: 'center',
-                alignItems: 'center',
-              },
-              animatedStyle, // Apply the animated style for translateX
-            ]}
+            style={[styles.box, animatedStyle]} // Apply animated style for pan gesture
           >
             <Text>Swipe Me</Text>
           </Animated.View>
@@ -61,31 +69,26 @@ function HomeScreen({ navigation }) {
 
         {/* Long Press Gesture Handler */}
         <LongPressGestureHandler onHandlerStateChange={onLongPress}>
-          <TouchableOpacity
-            style={{
-              marginTop: 50,
-              padding: 10,
-              backgroundColor: 'tomato',
-              borderRadius: 5,
-            }}
-          >
-            <Text style={{ color: 'white' }}>Long Press Me</Text>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Long Press Me</Text>
           </TouchableOpacity>
         </LongPressGestureHandler>
 
         {/* Fade-in Text */}
-        <Animated.Text
-          style={[
-            {
-              marginTop: 50,
-              fontSize: 24,
-              color: 'green',
-            },
-            fadeInStyle, // Apply the animated style for fade-in effect
-          ]}
-        >
+        <Animated.Text style={[styles.fadeInText, fadeInStyle]}>
           I Fade In!
         </Animated.Text>
+
+        {/* Display API Data or Error */}
+        {error && <Text style={styles.errorText}>{error}</Text>}
+        {data ? (
+          <Text style={styles.dataText}>{JSON.stringify(data, null, 2)}</Text>
+        ) : (
+          <Text>Loading data...</Text>
+        )}
+
+        {/* Retry Button */}
+        <Button title="Retry" onPress={fetchData} />
 
         {/* Navigation Button */}
         <Button
@@ -100,7 +103,7 @@ function HomeScreen({ navigation }) {
 // Details Screen Component
 function DetailsScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={styles.container}>
       <Text>Details Screen</Text>
     </View>
   );
@@ -119,3 +122,40 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+// Styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    color: 'red',
+  },
+  dataText: {
+    fontSize: 16,
+    marginTop: 10,
+  },
+  box: {
+    width: 200,
+    height: 200,
+    backgroundColor: 'lightblue',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    marginTop: 50,
+    padding: 10,
+    backgroundColor: 'tomato',
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+  },
+  fadeInText: {
+    marginTop: 50,
+    fontSize: 24,
+    color: 'green',
+  },
+});
