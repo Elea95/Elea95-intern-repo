@@ -1,11 +1,13 @@
-import 'react-native-gesture-handler';  
+import 'react-native-gesture-handler';  // Import first!
 import React, { useEffect } from 'react';
-import { GestureHandlerRootView } from 'react-native-gesture-handler'; // Import GestureHandlerRootView
-import { Text, View, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native'; // For navigation container
+import { createStackNavigator } from '@react-navigation/stack';  // For stack navigator
+import { Text, View, Button, TouchableOpacity } from 'react-native';
 import Animated, { Easing, withTiming, useSharedValue, withSpring, useAnimatedStyle } from 'react-native-reanimated'; // Updated import from react-native-reanimated
-import { PanGestureHandler, LongPressGestureHandler } from 'react-native-gesture-handler'; // Import gesture handlers
+import { PanGestureHandler, LongPressGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler'; // Import gesture handlers
 
-export default function App() {
+// Home Screen Component
+function HomeScreen({ navigation }) {
   // Use shared value from react-native-reanimated for swipe and opacity animation
   const translateX = useSharedValue(0); // For pan gesture
   const opacity = useSharedValue(0);   // For fade-in effect
@@ -26,7 +28,7 @@ export default function App() {
   // Use animated styles to apply shared values
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateX: withSpring(translateX.value) }],
+      transform: [{ translateX: withSpring(translateX.value) }], // Apply translation animation
     };
   });
 
@@ -39,6 +41,7 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        {/* Pan Gesture Handler */}
         <PanGestureHandler onGestureEvent={onGestureEvent}>
           <Animated.View
             style={[
@@ -56,6 +59,7 @@ export default function App() {
           </Animated.View>
         </PanGestureHandler>
 
+        {/* Long Press Gesture Handler */}
         <LongPressGestureHandler onHandlerStateChange={onLongPress}>
           <TouchableOpacity
             style={{
@@ -82,7 +86,36 @@ export default function App() {
         >
           I Fade In!
         </Animated.Text>
+
+        {/* Navigation Button */}
+        <Button
+          title="Go to Details"
+          onPress={() => navigation.navigate('Details')}
+        />
       </View>
     </GestureHandlerRootView>
+  );
+}
+
+// Details Screen Component
+function DetailsScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Details Screen</Text>
+    </View>
+  );
+}
+
+// Set up stack navigator
+const Stack = createStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
