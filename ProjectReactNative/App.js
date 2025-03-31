@@ -1,73 +1,67 @@
 import 'react-native-gesture-handler'; 
 import React, { useState, useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native'; // For navigation container
-import { createStackNavigator } from '@react-navigation/stack';  // For stack navigator
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import Animated, { Easing, withTiming, useSharedValue, withSpring, useAnimatedStyle } from 'react-native-reanimated'; // Updated import from react-native-reanimated
-import { PanGestureHandler, LongPressGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler'; // Import gesture handlers
-import axiosInstance from './src/api'; // Import the Axios instance
+import Animated, { Easing, withTiming, useSharedValue, withSpring, useAnimatedStyle } from 'react-native-reanimated';
+import { PanGestureHandler, LongPressGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler';
+import axiosInstance from './src/api'; // Import Axios instance
 
 // Home Screen Component
 function HomeScreen({ navigation }) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  
-  // For pan gesture and fade-in animation
-  const translateX = useSharedValue(0); // For pan gesture
-  const opacity = useSharedValue(0);   // For fade-in effect
 
+  // Animation and gesture variables
+  const translateX = useSharedValue(0); 
+  const opacity = useSharedValue(0);
+
+  // API call function
   const fetchData = async () => {
+    setError(null); // Reset error state
     try {
-      // Make a GET request to fetch data
-      const response = await axiosInstance.get('/data'); // Replace with your actual endpoint
-      setData(response.data); // Set the data to state
+      const response = await axiosInstance.get('/posts/1'); // Example API endpoint
+      setData(response.data); 
     } catch (err) {
-      setError('Failed to fetch data. Please try again later.');
-      console.error('API Error:', err); // Log the error for debugging
+      setError('❌ Failed to fetch data. Please try again.');
+      console.error('API Error:', err);
     }
   };
 
+  // Fetch data on component mount & trigger fade-in animation
   useEffect(() => {
-    fetchData(); // Fetch data when the component mounts
-
-    // Trigger fade-in animation after the component mounts
+    fetchData();
     opacity.value = withTiming(1, { duration: 2000, easing: Easing.ease });
   }, []);
 
   const onGestureEvent = (event) => {
-    translateX.value = event.translationX; // Update the pan gesture
+    translateX.value = event.translationX;
   };
 
   const onLongPress = () => {
     console.log("Long Press Detected!");
   };
 
-  // Use animated styles to apply shared values
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: withSpring(translateX.value) }], // Apply translation animation
-    };
-  });
+  // Animated styles
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: withSpring(translateX.value) }],
+  }));
 
-  const fadeInStyle = useAnimatedStyle(() => {
-    return {
-      opacity: opacity.value, // Use opacity shared value
-    };
-  });
+  const fadeInStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={styles.container}>
       <View style={styles.container}>
-        {/* Pan Gesture Handler */}
+        {/* Swipe Gesture */}
         <PanGestureHandler onGestureEvent={onGestureEvent}>
-          <Animated.View
-            style={[styles.box, animatedStyle]} // Apply animated style for pan gesture
-          >
+          <Animated.View style={[styles.box, animatedStyle]}>
             <Text>Swipe Me</Text>
           </Animated.View>
         </PanGestureHandler>
 
-        {/* Long Press Gesture Handler */}
+        {/* Long Press Button */}
         <LongPressGestureHandler onHandlerStateChange={onLongPress}>
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>Long Press Me</Text>
@@ -79,7 +73,7 @@ function HomeScreen({ navigation }) {
           I Fade In!
         </Animated.Text>
 
-        {/* Display API Data or Error */}
+        {/* API Data Display */}
         {error && <Text style={styles.errorText}>{error}</Text>}
         {data ? (
           <Text style={styles.dataText}>{JSON.stringify(data, null, 2)}</Text>
@@ -109,7 +103,7 @@ function DetailsScreen() {
   );
 }
 
-// Set up stack navigator
+// Stack Navigator Setup
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -129,13 +123,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
   errorText: {
     color: 'red',
+    fontSize: 16,
+    marginTop: 10,
   },
   dataText: {
     fontSize: 16,
     marginTop: 10,
+    color: 'blue',
   },
   box: {
     width: 200,
@@ -143,18 +141,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 20,
   },
   button: {
-    marginTop: 50,
+    marginTop: 20,
     padding: 10,
     backgroundColor: 'tomato',
     borderRadius: 5,
   },
   buttonText: {
     color: 'white',
+    fontWeight: 'bold',
   },
   fadeInText: {
-    marginTop: 50,
+    marginTop: 20,
     fontSize: 24,
     color: 'green',
   },

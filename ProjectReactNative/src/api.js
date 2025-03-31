@@ -1,21 +1,19 @@
-// src/api.js
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 
-// Create an axios instance
 const axiosInstance = axios.create({
-  baseURL: 'https://your-api-endpoint.com/', // Replace with your API base URL
-  timeout: 10000, // Request timeout in milliseconds
+  baseURL: 'https://jsonplaceholder.typicode.com', // Replace with your API URL
+  timeout: 5000, // Set request timeout (5 seconds)
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-// Apply retry logic
+// Enable automatic retries on failures
 axiosRetry(axiosInstance, {
-  retries: 3, // Number of retries
-  retryDelay: axiosRetry.exponentialDelay, // Exponential delay between retries
-  retryCondition: (error) => {
-    // Retry if the error is network-related or a 5xx server error
-    return axiosRetry.isNetworkOrIdempotentRequestError(error) || error.response?.status >= 500;
-  },
+  retries: 3, // Number of retry attempts
+  retryDelay: (retryCount) => retryCount * 1000, // Delay between retries (1s, 2s, 3s)
+  retryCondition: (error) => error.response?.status >= 500, // Retry only on server errors (500+)
 });
 
 export default axiosInstance;
