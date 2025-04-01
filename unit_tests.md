@@ -13,3 +13,17 @@ Setting up Jest in React Native required configuring `package.json` correctly an
 - How to set up Jest in React Native
 - How to write and run a unit test
 - The importance of testing for long-term project stability
+
+### What are the benefits of using React Testing Library instead of testing implementation details?
+
+React Testing Library focuses on testing how users interact with the app rather than testing internal component logic. This leads to:
+
+- More **reliable tests** (fewer false positives)
+- **Less refactoring required** when UI changes
+- **Better alignment with real user behavior**
+
+### What challenges did you encounter when simulating user interaction?
+
+- **Finding the right query** (e.g., `getByText`, `getByRole`)
+- **Understanding fireEvent vs. userEvent** (userEvent is more realistic)
+- **Ensuring the DOM updates properly after state changes**

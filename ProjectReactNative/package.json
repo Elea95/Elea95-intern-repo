@@ -45,7 +45,8 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/dist/"
-    ]
+    ],
+    "testEnvironment": "jsdom"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
@@ -53,8 +54,11 @@
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.27.0",
     "@react-native-community/cli": "^18.0.0",
+    "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/react": "^16.2.0",
     "@testing-library/react-native": "^13.2.0",
+    "@testing-library/user-event": "^14.6.1",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
     "react-test-renderer": "^18.3.1",
