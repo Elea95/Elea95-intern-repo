@@ -27,3 +27,21 @@ React Testing Library focuses on testing how users interact with the app rather 
 - **Finding the right query** (e.g., `getByText`, `getByRole`)
 - **Understanding fireEvent vs. userEvent** (userEvent is more realistic)
 - **Ensuring the DOM updates properly after state changes**
+
+### Why is it important to mock API calls in tests?
+
+- Avoids real network requests → Faster tests.
+
+- Ensures predictable responses → No dependency on external API changes.
+
+- Prevents rate limits or API downtime issues.
+
+- Focuses tests on component behavior, not API reliability.
+
+### Common Pitfalls When Testing Async Code
+
+- Not using await waitFor() → Causes flaky tests.
+
+- Forgetting to reset mocks (jest.clearAllMocks()) → Data leaks across tests.
+
+- Mocking incorrect API structure → Breaks integration with real API.
