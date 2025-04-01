@@ -45,3 +45,15 @@ React Testing Library focuses on testing how users interact with the app rather 
 - Forgetting to reset mocks (jest.clearAllMocks()) → Data leaks across tests.
 
 - Mocking incorrect API structure → Breaks integration with real API.
+
+### What was the most challenging part of testing Redux?
+
+- Handling async actions correctly (e.g., mocking API calls).
+
+- Ensuring Redux state updates correctly in tests.
+
+### How do Redux tests differ from React component tests?
+
+- Component tests check how the UI renders and behaves.
+
+- Redux tests check state logic and reducers without rendering the UI.
