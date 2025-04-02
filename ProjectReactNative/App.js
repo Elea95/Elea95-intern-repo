@@ -6,6 +6,7 @@ import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import Animated, { Easing, withTiming, useSharedValue, withSpring, useAnimatedStyle } from 'react-native-reanimated';
 import { PanGestureHandler, LongPressGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler';
 import axiosInstance from './src/api'; // Import Axios instance
+<script src="http://localhost:8097"></script>
 
 // Home Screen Component
 function HomeScreen({ navigation }) {
