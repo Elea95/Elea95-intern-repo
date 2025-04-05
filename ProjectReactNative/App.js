@@ -1,35 +1,37 @@
-import 'react-native-gesture-handler'; 
+import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import Animated, { Easing, withTiming, useSharedValue, withSpring, useAnimatedStyle } from 'react-native-reanimated';
 import { PanGestureHandler, LongPressGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler';
-import axiosInstance from './src/api'; // Import Axios instance
-<script src="http://localhost:8097"></script>
+import axiosInstance from './src/api';
+import './src/i18n/i18n';
+import { useTranslation } from 'react-i18next';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Home Screen Component
+const Stack = createStackNavigator();
+
+// 🏠 Home Screen
 function HomeScreen({ navigation }) {
+  const { t, i18n } = useTranslation();
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  // Animation and gesture variables
-  const translateX = useSharedValue(0); 
+  const translateX = useSharedValue(0);
   const opacity = useSharedValue(0);
 
-  // API call function
   const fetchData = async () => {
-    setError(null); // Reset error state
+    setError(null);
     try {
-      const response = await axiosInstance.get('/posts/1'); // Example API endpoint
-      setData(response.data); 
+      const response = await axiosInstance.get('/posts/1');
+      setData(response.data);
     } catch (err) {
       setError('❌ Failed to fetch data. Please try again.');
       console.error('API Error:', err);
     }
   };
 
-  // Fetch data on component mount & trigger fade-in animation
   useEffect(() => {
     fetchData();
     opacity.value = withTiming(1, { duration: 2000, easing: Easing.ease });
@@ -43,7 +45,6 @@ function HomeScreen({ navigation }) {
     console.log("Long Press Detected!");
   };
 
-  // Animated styles
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: withSpring(translateX.value) }],
   }));
@@ -52,61 +53,66 @@ function HomeScreen({ navigation }) {
     opacity: opacity.value,
   }));
 
+  const toggleLanguage = () => {
+    const nextLang = i18n.language === 'en' ? 'fr' : 'en';
+    i18n.changeLanguage(nextLang);
+    AsyncStorage.setItem('user-language', nextLang);
+  };
+
   return (
     <GestureHandlerRootView style={styles.container}>
       <View style={styles.container}>
+        {/* Language Switcher */}
+        <Button title={t('change_language')} onPress={toggleLanguage} />
+
         {/* Swipe Gesture */}
         <PanGestureHandler onGestureEvent={onGestureEvent}>
           <Animated.View style={[styles.box, animatedStyle]}>
-            <Text>Swipe Me</Text>
+            <Text>{t('swipe_me')}</Text>
           </Animated.View>
         </PanGestureHandler>
 
-        {/* Long Press Button */}
+        {/* Long Press */}
         <LongPressGestureHandler onHandlerStateChange={onLongPress}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Long Press Me</Text>
+            <Text style={styles.buttonText}>{t('long_press_me')}</Text>
           </TouchableOpacity>
         </LongPressGestureHandler>
 
-        {/* Fade-in Text */}
+        {/* Fade In Text */}
         <Animated.Text style={[styles.fadeInText, fadeInStyle]}>
-          I Fade In!
+          {t('fade_in_text')}
         </Animated.Text>
 
-        {/* API Data Display */}
+        {/* API Result */}
         {error && <Text style={styles.errorText}>{error}</Text>}
         {data ? (
           <Text style={styles.dataText}>{JSON.stringify(data, null, 2)}</Text>
         ) : (
-          <Text>Loading data...</Text>
+          <Text>{t('loading_data')}</Text>
         )}
 
-        {/* Retry Button */}
-        <Button title="Retry" onPress={fetchData} />
+        {/* Retry */}
+        <Button title={t('retry')} onPress={fetchData} />
 
-        {/* Navigation Button */}
-        <Button
-          title="Go to Details"
-          onPress={() => navigation.navigate('Details')}
-        />
+        {/* Navigation */}
+        <Button title={t('go_to_details')} onPress={() => navigation.navigate('Details')} />
       </View>
     </GestureHandlerRootView>
   );
 }
 
-// Details Screen Component
+// 📄 Details Screen
 function DetailsScreen() {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text>Details Screen</Text>
+      <Text>{t('details_screen')}</Text>
     </View>
   );
 }
 
-// Stack Navigator Setup
-const Stack = createStackNavigator();
-
+// 🚀 App Root
 export default function App() {
   return (
     <NavigationContainer>
@@ -118,7 +124,7 @@ export default function App() {
   );
 }
 
-// Styles
+// 🎨 Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
