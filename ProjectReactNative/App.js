@@ -9,6 +9,8 @@ import axiosInstance from './src/api';
 import './src/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NativeModules } from 'react-native';
+import Config from 'react-native-config';
 
 const Stack = createStackNavigator();
 
@@ -31,7 +33,14 @@ function HomeScreen({ navigation }) {
       console.error('API Error:', err);
     }
   };
+  const { Battery } = NativeModules;
 
+  useEffect(() => {
+    Battery.getBatteryLevel().then(level => {
+      console.log('🔋 Battery level:', level);
+    });
+  }, []);
+console.log(Config.API_URL); // Outputs env variable
   useEffect(() => {
     fetchData();
     opacity.value = withTiming(1, { duration: 2000, easing: Easing.ease });

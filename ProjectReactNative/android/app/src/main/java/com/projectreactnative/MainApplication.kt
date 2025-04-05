@@ -2,7 +2,7 @@ package com.projectreactnative
 
 import android.app.Application
 import android.content.res.Configuration
-
+import com.yourapp.BatteryModule;
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
 import com.facebook.react.ReactNativeHost
@@ -54,4 +54,11 @@ class MainApplication : Application(), ReactApplication {
     super.onConfigurationChanged(newConfig)
     ApplicationLifecycleDispatcher.onConfigurationChanged(this, newConfig)
   }
+}
+@Override
+protected List<ReactPackage> getPackages() {
+  return Arrays.<ReactPackage>asList(
+    new MainReactPackage(),
+    new BatteryPackage() // <-- Register here
+  );
 }
