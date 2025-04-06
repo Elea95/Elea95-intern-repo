@@ -12,6 +12,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NativeModules } from 'react-native';
 import Config from 'react-native-config';
 import linking from './linking';
+import * as Sentry from '@sentry/react-native';
+
 
 const Stack = createStackNavigator();
 
@@ -111,7 +113,11 @@ console.log(Config.API_URL); // Outputs env variable
     </GestureHandlerRootView>
   );
 }
-
+Sentry.init({
+  dsn: 'https://<YOUR_PUBLIC_KEY>@o<ORG_ID>.ingest.sentry.io/<PROJECT_ID>',
+  enableNative: true,
+  tracesSampleRate: 1.0, // for performance monitoring
+});
 // 📄 Details Screen
 function DetailsScreen() {
   const { t } = useTranslation();
@@ -124,17 +130,22 @@ function DetailsScreen() {
 
 // 🚀 App Root
 export default function App() {
+  const triggerError = () => {
+    try {
+      throw new Error("🔥 Manual crash test from Focus Bear");
+    } catch (err) {
+      Sentry.captureException(err);
+      console.error(err);
+    }
+  };
+
   return (
-    <NavigationContainer linking={linking}>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Welcome to Focus Bear 🐻</Text>
+      <Button title="Trigger Crash" onPress={triggerError} />
+    </View>
   );
 }
-
 // 🎨 Styles
 const styles = StyleSheet.create({
   container: {
